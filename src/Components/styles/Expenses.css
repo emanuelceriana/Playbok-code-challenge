@@ -1,0 +1,40 @@
+.Expenses-container {
+  min-width: 100vw;
+}
+
+.Expenses-row {
+  margin-top: 3vh;
+}
+
+@media only screen and (max-width: 575px) {
+  .Expenses-row {
+    flex-direction: column-reverse;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 575px) {
+  .Expenses-container {
+    min-width: 90vw;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .Expenses-container {
+    min-width: 60vw;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .Expenses-container {
+    min-width: 50vw;
+  }
+}

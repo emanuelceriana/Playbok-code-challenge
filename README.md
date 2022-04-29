@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+<p align="center">
+  <img class="p-10" src="https://media-exp1.licdn.com/dms/image/C5603AQGk_vadwKppIQ/profile-displayphoto-shrink_800_800/0/1621523448391?e=1655942400&v=beta&t=RG4Kl5pyAPVSuIH3AeVKi1dBLwo6IPl2FO0UfnlhTIg" width="150" alt="Emanuel Ceriana" />
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center" margin="0"><img src="https://i0.wp.com/www.owlishcommunications.com/thewisdomzone/wp-content/uploads/LINKEDIN-LOGO-2-Animated-Pulsating.gif?fit=500%2C500&ssl=1" width="50"></img></p>
+<p align="center"><a href="https://www.linkedin.com/in/emanuelceriana/"> Emanuel Ceriana</a></p>
 
-## Available Scripts
 
-In the project directory, you can run:
+# Playbook Code Test - Expenses List.
 
-### `npm start`
+# Code tasks
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] Title should have at least 5 characters.
+- [x] Amount should accept at most two digits after the decimal point.
+- [x] Add Button should add a new item to the list.
+- [x] Amount should be automatically recalculated into Euro.
+- [x] User should be allowed to delete any item from the list.
+- [x] The sum should be calculated automatically.
+- [x] Optionally add possibility to change conversion rate.
+- [x] Test Cases.
+- [x] Responsive.
+- [x] And more.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+## With Docker
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Just run:
 
-### `npm run build`
+```bash
+$ docker-compose up
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Without Docker
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Two things:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+$ npm i
+$ npm run test:start
+```
 
-### `npm run eject`
+#### After run all the test (If nothing explodes), the project start and run on port 3000 💪 💪
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

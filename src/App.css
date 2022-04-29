@@ -1,38 +1,32 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Content-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-content: center;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: auto;
+  background-image: url('https://playbookengineering.com/wp-content/uploads/2021/10/home-hero-bg-mobile@2x.png');
+  background-color: rgb(182, 221, 245);
 }
 
-.App-link {
-  color: #61dafb;
+.Header {
+  color: white !important;
+  font-weight: 600;
+  font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Footer {
+  background-color: black;
+  color: yellow;
+  font-weight: 600;
+}
+
+.ant-dropdown-menu {
+  text-align: center;
 }

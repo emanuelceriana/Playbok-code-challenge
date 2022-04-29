@@ -1,0 +1,10 @@
+version: '3'
+ 
+services:
+  expenseslist:
+    container_name: playbook-code-test
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    network_mode: bridge

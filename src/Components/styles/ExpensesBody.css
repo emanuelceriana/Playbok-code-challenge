@@ -1,0 +1,13 @@
+.Expenses-body {
+  margin-top: 2vh;
+}
+
+@media only screen and (max-width: 575px) {
+  .Expenses-body {
+    justify-content: center;
+  }
+
+  .Button-column {
+    margin-top: 2vh;
+  }
+}

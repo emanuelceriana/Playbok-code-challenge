@@ -1,17 +1,24 @@
 {
   "name": "code-challenge-playbook",
-  "version": "0.1.0",
+  "author": "Emanuel Ceriana",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@types/antd": "^1.0.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.28",
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.1",
+    "antd": "^4.20.0",
+    "axios": "^0.27.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "react": "^17.0.1",
+    "react-cookie": "^4.1.1",
+    "react-dom": "^17.0.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
@@ -20,13 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "test:start": "react-scripts test --watchAll=false && react-scripts start",
+    "eject": "react-scripts eject",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "browserslist": {
     "production": [
@@ -39,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.12",
+    "@typescript-eslint/parser": "^5.21.0",
+    "prettier": "^2.6.2",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.6.7"
   }
 }
