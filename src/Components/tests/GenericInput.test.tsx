@@ -4,7 +4,9 @@ import Input from 'antd/lib/input/Input';
 
 import GenericInput from '../GenericInput';
 import ExpensesBody from '../ExpensesBody';
-import { CurrencyEnum } from '../../utils/ConversionRateList';
+import CurrencyStore from '../../stores/CurrencyStore';
+
+const currency = new CurrencyStore();
 
 const changeInputWithValidation = (
   wrapper: ReactWrapper,
@@ -44,7 +46,7 @@ describe('Test Case Generic Input component', () => {
 
   describe('Test Case Title Of Transaction input', () => {
     test('Show Required Field message', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const titleOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -56,7 +58,7 @@ describe('Test Case Generic Input component', () => {
     });
 
     test('Show Minimum length is 5 message when lenght < 5', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const titleOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -68,7 +70,7 @@ describe('Test Case Generic Input component', () => {
     });
 
     test('Do not show error message when lenght >= 5.', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const titleOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -83,7 +85,7 @@ describe('Test Case Generic Input component', () => {
 
   describe('Test Case Amount Of Transaction input', () => {
     test('Show Required Field message.', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const amountOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -95,7 +97,7 @@ describe('Test Case Generic Input component', () => {
     });
 
     test('Show Amount is not a valid number message.', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const amountOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -109,7 +111,7 @@ describe('Test Case Generic Input component', () => {
     });
 
     test('Show Max digits quantity after comma is 2 message.', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const amountOfTransactionInput = changeInputWithValidation(
         wrapper,
@@ -123,7 +125,7 @@ describe('Test Case Generic Input component', () => {
     });
 
     test('Do not show error message when amount is a number and has not more than 2 digits after comma.', () => {
-      const wrapper = mount(<ExpensesBody currency={CurrencyEnum.EUR} />);
+      const wrapper = mount(<ExpensesBody currency={currency} />);
 
       const amountOfTransactionInput = changeInputWithValidation(
         wrapper,

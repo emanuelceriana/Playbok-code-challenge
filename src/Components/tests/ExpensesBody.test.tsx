@@ -5,11 +5,14 @@ import { Button, Table } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import ExpensesBody from '../ExpensesBody';
 import { CurrencyEnum } from '../../utils/ConversionRateList';
+import CurrencyStore from '../../stores/CurrencyStore';
 
 interface Transaction {
     title: string,
     amount: string
 }
+
+const currency = new CurrencyStore();
 
 const clearTest = (wrapper: ReactWrapper): void => {
   wrapper.unmount();
@@ -75,7 +78,6 @@ const PopulateTransactionTable = (
 describe('Test Case ExpensesBody component', () => {
   describe('Test Case Actions of transaction (Add, Replace, Delete)', () => {
     test('Test Add transaction to Expenses Table', () => {
-      const currency = CurrencyEnum.EUR;
 
       //Test always with dot instead of comma because the code logic change comma string to dot number
       const transaction = { title: 'Transaction Test', amount: '33.33' };
@@ -91,7 +93,6 @@ describe('Test Case ExpensesBody component', () => {
     });
 
     test('Test Replace transaction from Expenses Table when click OK button on TransactionModal', () => {
-      const currency = CurrencyEnum.EUR;
 
       //Test always with dot instead of comma because the code logic change comma string to dot number
       const beforeTransaction = { title: 'Transaction Test', amount: '33.33' };
@@ -107,7 +108,6 @@ describe('Test Case ExpensesBody component', () => {
     });
 
     test('Test do not Replace transaction from Expenses Table when click Cancel button on TransactionModal', () => {
-      const currency = CurrencyEnum.EUR;
 
       //Test always with dot instead of comma because the code logic change comma string to dot number
       const beforeTransaction = { title: 'Transaction Test', amount: '33.33' };
@@ -125,7 +125,6 @@ describe('Test Case ExpensesBody component', () => {
     });
 
     test('Test Delete transaction from Expenses Table', () => {
-      const currency = CurrencyEnum.EUR;
 
       //Test always with dot instead of comma because the code logic change comma string to dot number
       const transaction = { title: 'Transaction Test', amount: '33.33' };
@@ -145,7 +144,6 @@ describe('Test Case ExpensesBody component', () => {
   });
 
   test('Test Total amount from many transactions in the Table', () => {
-    const currency = CurrencyEnum.EUR;
 
     const transaction = { title: 'Transaction', amount: '10' };
     const quantity = 5;
@@ -165,7 +163,6 @@ describe('Test Case ExpensesBody component', () => {
   });
 
   test('Test Pagination when transaction quantity is more than default pageSize (5) second page', () => {
-    const currency = CurrencyEnum.EUR;
 
     const transaction = { title: 'Transaction', amount: '10' };
     const quantity = 6;
@@ -180,7 +177,6 @@ describe('Test Case ExpensesBody component', () => {
   });
 
   test('Test Pagination when transaction quantity is less than default pageSize (5) one page', () => {
-    const currency = CurrencyEnum.EUR;
 
     const transaction = { title: 'Transaction', amount: '10' };
     const quantity = 4;
@@ -195,7 +191,6 @@ describe('Test Case ExpensesBody component', () => {
   });
 
   test('Test Pagination change page when click', () => {
-    const currency = CurrencyEnum.EUR;
 
     const transaction = { title: 'Transaction', amount: '10' };
     const quantity = 6;
