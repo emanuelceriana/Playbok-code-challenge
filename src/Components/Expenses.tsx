@@ -7,11 +7,14 @@ import ConversionRate from './ConversionRate';
 import ExpensesHeader from './ExpensesHeader';
 import ExpensesBody from './ExpensesBody';
 import { CurrencyEnum } from '../utils/ConversionRateList';
+import CurrencyStore from '../stores/CurrencyStore';
 
 interface Props {}
 
+const currency = new CurrencyStore();
+
 export const Expenses: React.FC<Props> = (): JSX.Element => {
-  const [currency, setCurrency] = useState(CurrencyEnum.EUR);
+  // const [currency, setCurrency] = useState(CurrencyEnum.EUR);
 
   const expensesListTitle = 'List of Expenses';
 
@@ -19,7 +22,7 @@ export const Expenses: React.FC<Props> = (): JSX.Element => {
     <div className="Expenses-container">
       <ExpensesHeader
         title={<Title content={expensesListTitle} />}
-        conversionRate={<ConversionRate currency={currency} setCurrency={setCurrency} />}
+        conversionRate={<ConversionRate currency={currency} />}
       />
       <ExpensesBody currency={currency} />
     </div>

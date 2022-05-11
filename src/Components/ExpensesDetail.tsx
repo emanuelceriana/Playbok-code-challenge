@@ -2,21 +2,23 @@ import React, { useEffect, useState } from 'react';
 
 import { Table, Button, Row, Col, Tooltip } from 'antd';
 
-import { Transaction } from '../types/TransactionTypes';
 import { ConversionRateList } from '../utils/ConversionRateList';
 import { DeleteOutlined, ControlOutlined } from '@ant-design/icons';
 import useWindowSize from '../Hooks/useWindowSize';
+import CurrencyStore from '../stores/CurrencyStore';
+import { observer } from 'mobx-react-lite';
+import TransactionStore, { Transaction } from '../stores/TransactionStore';
 
 interface Props {
-  transactions: Transaction[];
-  currency: string;
-  handleTransactionDelete: Function;
+  transactions: TransactionStore;
+  currency: CurrencyStore;
+  handleTransactionsRemove: Function;
 }
 
 const ExpensesDetail: React.FC<Props> = ({
   transactions,
   currency,
-  handleTransactionDelete
+  handleTransactionsRemove
 }): JSX.Element => {
   const [totalAmount, setTotalAmount] = useState(0);
   const { width } = useWindowSize();
@@ -26,13 +28,13 @@ const ExpensesDetail: React.FC<Props> = ({
   }
 
   const getConversionValue = (amount: number) => {
-    return (amount / ConversionRateList[currency]).toFixed(2);
+    return (amount / ConversionRateList[currency.value]).toFixed(2);
   };
 
   useEffect(() => {
     const calcTotalAmount = () => {
-      const totalAmountCalculated = transactions.reduce((totalAmount, transaction) => {
-        return (totalAmount += transaction.amount);
+      const totalAmountCalculated = transactions.list.reduce((totalAmount, transaction) => {
+        return (totalAmount += Number(transaction.amount));
       }, 0);
 
       setTotalAmount(totalAmountCalculated);
@@ -62,11 +64,11 @@ const ExpensesDetail: React.FC<Props> = ({
       key: 'amount'
     },
     {
-      title: isMobile() ? `(${currency})` : `Amount (${currency})`,
+      title: isMobile() ? `(${currency.value})` : `Amount (${currency.value})`,
       dataIndex: 'amount',
       id: 'Conversion-Row',
       columnTitle: 'Conversion-Row',
-      render: (amount: number, record: Transaction) => {
+      render: (amount: number) => {
         return <span>{getConversionValue(amount)}</span>;
       }
     },
@@ -79,14 +81,14 @@ const ExpensesDetail: React.FC<Props> = ({
           <DeleteOutlined
             id="Delete-Action"
             onClick={() => {
-              handleTransactionDelete(record);
+              handleTransactionsRemove(record);
             }}
           />
         ) : (
           <Button
             id="Delete-Action"
             onClick={() => {
-              handleTransactionDelete(record);
+              handleTransactionsRemove(record);
             }}>
             <a>Delete</a>
           </Button>
@@ -101,7 +103,7 @@ const ExpensesDetail: React.FC<Props> = ({
           {totalAmount > 0 && (
             <h3 id="Total-Amount">{`Sum: ${totalAmount} PLN (${getConversionValue(
               totalAmount
-            )} ${currency})`}</h3>
+            )} ${currency.value})`}</h3>
           )}
         </Col>
       </Row>
@@ -109,13 +111,13 @@ const ExpensesDetail: React.FC<Props> = ({
         <Col xs={22} sm={24} md={24} lg={24}>
           <Table
             columns={columns}
-            dataSource={transactions.length ? transactions : []}
+            dataSource={transactions.list.length ? transactions.list : []}
             rowKey={(record) => `${record.title}:${record.amount}`}
             bordered
             pagination={{
               position: ['bottomRight'],
               defaultPageSize: 5,
-              total: transactions.length
+              total: transactions.list.length
             }}
           />
         </Col>
@@ -124,4 +126,4 @@ const ExpensesDetail: React.FC<Props> = ({
   );
 };
 
-export default ExpensesDetail;
+export default observer(ExpensesDetail);

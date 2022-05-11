@@ -1,4 +1,4 @@
-import React, { useState, useRef, useReducer } from 'react';
+import React, { useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 
 import { Button, Col, Row } from 'antd';
@@ -9,105 +9,56 @@ import GenericInput from './GenericInput';
 import TransactionModal from './TransactionModal';
 import ExpensesDetail from './ExpensesDetail';
 
-import { Transaction, Action } from '../types/TransactionTypes';
+import CurrencyStore from '../stores/CurrencyStore';
+
+import TransactionStore, { Transaction } from '../stores/TransactionStore';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
-  currency: string;
+  currency: CurrencyStore
 }
 
 type InputHandle = React.ElementRef<typeof GenericInput>;
 
 const ExpensesBody: React.FC<Props> = ({ currency }): JSX.Element => {
+
   const [cookies, setCookie] = useCookies();
 
-  const transactionReducer = (state: Array<Transaction>, action: Action): Transaction[] => {
-    switch (action.type) {
-      case 'Add':
-        const alreadyExist = state.find(
-          (transaction) => transaction.title === action.transaction.title
-        );
-
-        if (alreadyExist) {
-          setPreviousTransactionAmount(alreadyExist?.amount.toString());
-          setTransactionModalVisible(true);
-        } else {
-          state = [...state, action.transaction];
-          clearInputs();
-          persistState(state);
-        }
-        break;
-      case 'Replace':
-        const indexReplace = state.findIndex(
-          (transaction) => transaction.title === action.transaction.title
-        );
-        state[indexReplace].amount = action.transaction.amount;
-        state = [...state];
-        clearInputs();
-        persistState(state);
-        break;
-      case 'Delete':
-        const newState = state.filter(
-          (transaction) => transaction.title !== action.transaction.title
-        );
-        state = [...newState];
-        persistState(state);
-        break;
-      default:
-        break;
-    }
-    return state;
-  };
-
-  const clearInputs = (): void => {
-    setTransactionTitleInput('');
-    setTransactionAmountInput('');
+  const initialState = (): Transaction[] => {
+    return cookies['transactions'] ? cookies['transactions'] : [];
   };
 
   const persistState = (state: Transaction[]): void => {
     setCookie('transactions', state);
   };
 
-  const initialState = (): Transaction[] => {
-    return cookies['transactions'] ? cookies['transactions'] : [];
+  const transactions = new TransactionStore(initialState());
+
+  const clearInputs = (): void => {
+    setTransactionTitleInput('');
+    setTransactionAmountInput('');
   };
 
   const [transactionTitleInput, setTransactionTitleInput] = useState('');
   const [transactionAmountInput, setTransactionAmountInput] = useState('');
   const [transactionModalVisible, setTransactionModalVisible] = useState(false);
   const [previousTransactionAmount, setPreviousTransactionAmount] = useState('');
-  const [transactionList, dispatch] = useReducer(transactionReducer, initialState());
 
   const transactionTitleRef = useRef<InputHandle>(null);
   const transactionAmountRef = useRef<InputHandle>(null);
 
-  const addTransaction = (transaction: Transaction): Action => {
-    return {
-      type: 'Add',
-      transaction
-    };
+  const handleTransactionsRemove = (expense: Transaction): void => {
+    transactions.remove(expense);
+    persistState(transactions.list);
   };
 
-  const ReplaceTransaction = (transaction: Transaction): Action => {
-    return {
-      type: 'Replace',
-      transaction
-    };
-  };
-
-  const DeleteTransaction = (transaction: Transaction): Action => {
-    return {
-      type: 'Delete',
-      transaction
-    };
-  };
-
-  const handleTransactionDelete = (transaction: Transaction): void => {
-    dispatch(DeleteTransaction(transaction));
-  };
-
-  const handleTransactionModal = (transaction: Transaction): void => {
+  const handleTransactionModal = (transaction?: Transaction): void => {
     setTransactionModalVisible(false);
-    transaction && dispatch(ReplaceTransaction(transaction));
+    if(transaction) {
+      transactions.replace(transaction);
+      persistState(transactions.list);
+      clearInputs();
+    }
   };
 
   const handleValidation = (): void => {
@@ -120,7 +71,16 @@ const ExpensesBody: React.FC<Props> = ({ currency }): JSX.Element => {
         amount: Number(transactionAmountInput.replace(',', '.'))
       };
 
-      dispatch(addTransaction(transaction));
+      //If return true add transaction, if not show replace modal
+      if(transactions.add(transaction)) {
+        persistState(transactions.list);
+        clearInputs();
+      } else {
+        const previousTransaction = transactions.get(transaction.title) as Transaction;
+        setPreviousTransactionAmount(previousTransaction?.amount.toString());
+        setTransactionModalVisible(true);
+      }
+
     }
   };
 
@@ -165,9 +125,9 @@ const ExpensesBody: React.FC<Props> = ({ currency }): JSX.Element => {
       <Row style={{ marginTop: '4vh' }} justify="center" align="middle">
         <Col xs={22} sm={24} md={24} lg={24}>
           <ExpensesDetail
-            transactions={transactionList}
+            transactions={transactions}
             currency={currency}
-            handleTransactionDelete={handleTransactionDelete}
+            handleTransactionsRemove={handleTransactionsRemove}
           />
         </Col>
       </Row>
@@ -175,4 +135,4 @@ const ExpensesBody: React.FC<Props> = ({ currency }): JSX.Element => {
   );
 };
 
-export default ExpensesBody;
+export default observer(ExpensesBody);
